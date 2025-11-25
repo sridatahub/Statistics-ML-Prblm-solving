@@ -64,3 +64,44 @@ Probability of Tail: 0.60
 The probability of rolling a 3 is: 0.1667
 Which is also: 1/6
 
+
+import sys
+import random
+try:
+    n = int(input("Enter number of coin tosses: "))
+    d = int(input("Enter desired dice number (1–6): "))
+except ValueError:
+    print("Invalid input")
+    sys.exit()
+
+results = [random.choice(['Tail','Head']) for _ in range(n)]
+
+no_heads = results.count('Head')
+no_tails = results.count('Tail')
+
+total = len(results)
+
+prob_head = no_heads/total
+prob_tail = no_tails/total
+
+print("\n--- Coin Toss Results ---")
+
+
+print(f"Head: {no_heads}, Tail: {no_tails}")
+print(f"Probability of Head: {prob_head:.2f}")
+
+print(f"Probability of Tail: {prob_tail:.2f}\n")
+
+
+print("--- Dice Roll Probability ---")
+
+die_prob = 1/6
+
+print(f"The probability of rolling a {d} is: {die_prob:.4f}")
+print("Which is also: 1/6")
+
+
+
+
+
+2.
