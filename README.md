@@ -47,3 +47,20 @@ Probabilities should be rounded:
 
 Coin toss results: rounded to 2 decimal places
 Dice roll probability: shown as both fraction and 4-digit decimal (e.g., 0.1667)
+
+Input 1 :
+10
+3
+
+
+Output 1 :
+Enter number of coin tosses: Enter desired dice number (1–6): 
+--- Coin Toss Results ---
+Head: 4, Tail: 6
+Probability of Head: 0.40
+Probability of Tail: 0.60
+
+--- Dice Roll Probability ---
+The probability of rolling a 3 is: 0.1667
+Which is also: 1/6
+
