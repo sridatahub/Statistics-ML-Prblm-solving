@@ -104,7 +104,7 @@ print("Which is also: 1/6")
 
 Program Description
 
-Create the program analyzes customer preferences for two types of coffee—Latte and Black Coffee—across three age groups: 18–25, 26–40, and 40+. It calculates the probability that older customers (age 40 and above) prefer Black Coffee, both jointly and conditionally, and assesses whether age influences this preference.
+2.Create the program analyzes customer preferences for two types of coffee—Latte and Black Coffee—across three age groups: 18–25, 26–40, and 40+. It calculates the probability that older customers (age 40 and above) prefer Black Coffee, both jointly and conditionally, and assesses whether age influences this preference.
 
 Input format :
 The program asks the user to input the number of customers who prefer each coffee type for each age group. Specifically:
@@ -137,7 +137,178 @@ If the total number of customers is zero, the program exits with an error messag
 
 If there are no customers in the 40+ group, the conditional probability cannot be computed, and the program exits with an error message.
 
+Sample test cases :
+Input 1 :
+30
+10
+25
+25
+5
+25
+Output 1 :
+
+Age group: 18–25
+Number of customers who prefer Latte: Number of customers who prefer Black Coffee: 
+Age group: 26–40
+Number of customers who prefer Latte: Number of customers who prefer Black Coffee: 
+Age group: 40+
+Number of customers who prefer Latte: Number of customers who prefer Black Coffee: 
+Data Summary:
+       Latte  Black Coffee
+18–25     30            10
+26–40     25            25
+40+        5            25
+
+Joint Probability P(Age 40+ and Black Coffee): 0.2083
+Conditional Probability P(Black Coffee | Age 40+): 0.8333
+
+Overall Probability P(Black Coffee): 0.5000
+Conditional Probability P(Black Coffee | Age 40+): 0.8333
+Age (being 40 or older) influences preference for Black Coffee
 
 
 
-2.
+import os
+import sys
+import pandas as pd
+def get_int_input(prompt):
+    try:
+        value = int(input(prompt))
+        if value < 0:
+            print("Please enter a non-negative integer.")
+            sys.exit(1)
+        return value
+    except ValueError:
+        print("Invalid input! Please enter an integer.")
+        sys.exit(1)
+age_groups = ['18–25', '26–40', '40+']
+coffee_types = ['Latte', 'Black Coffee']
+data = {coffee: [] for coffee in coffee_types}
+for age in age_groups:
+    print(f"\nAge group: {age}")
+    for coffee in coffee_types:
+        count = get_int_input(f"Number of customers who prefer {coffee}: ")
+        data[coffee].append(count)
+df = pd.DataFrame(data, index=age_groups)
+total_customers = df.values.sum()
+if total_customers == 0:
+    print("No data provided (total customers = 0). Exiting.")
+    sys.exit(1)
+print("\nData Summary:")
+print(df)
+joint_prob_older_black = df.loc['40+', 'Black Coffee'] / total_customers
+print(f"\nJoint Probability P(Age 40+ and Black Coffee): {joint_prob_older_black:.4f}")
+total_40plus = df.loc['40+'].sum()
+if total_40plus == 0:
+    print("No customers in the 40+ age group, conditional probability undefined.")
+    sys.exit(1)
+
+black_40plus = df.loc['40+', 'Black Coffee']
+cond_prob_black_given_40plus = black_40plus / total_40plus
+print(f"Conditional Probability P(Black Coffee | Age 40+): {cond_prob_black_given_40plus:.4f}")
+
+overall_prob_black = df['Black Coffee'].sum() / total_customers
+print(f"\nOverall Probability P(Black Coffee): {overall_prob_black:.4f}")
+print(f"Conditional Probability P(Black Coffee | Age 40+): {cond_prob_black_given_40plus:.4f}")
+
+if abs(cond_prob_black_given_40plus - overall_prob_black) < 1e-4:
+    print("Age (being 40 or older) does NOT influence preference for Black Coffee.")
+else:
+    print("Age (being 40 or older) influences preference for Black Coffee.")
+
+
+
+
+3.Create the Python program calculates the total number of possible PIN codes that can be generated using a set of user-defined digits, with two conditions:
+
+Without Replacement: Digits in the PIN do not repeat
+
+With Replacement: Digits can repeat in the PIN
+
+It utilizes Python's itertools module and takes all input directly from the user.
+
+Input format :
+The program accepts two user inputs:
+
+Digits: A list of characters or numbers, separated by commas
+
+Example: 0,1,2,3,4
+
+PIN Length: An integer specifying how many digits the PIN should contain
+
+Example: 3
+
+Output format :
+After receiving inputs, the program displays:
+
+The total number of unique-digit PINs (no digit is repeated – permutation without replacement)
+
+The total number of PINs with repeated digits allowed (permutation with replacement)
+
+Code constraints :
+The list of digits must not be empty
+
+The PIN length must be a positive integer
+
+The PIN length must not exceed the number of digits when calculating permutations without replacement
+
+If any input is invalid, the program will show an error and exit
+
+
+
+Sample test cases :
+Input 1 :
+0,1,2,3,4
+3
+Output 1 :
+PIN Permutation Generator
+Enter digits to use for PIN separated by commas (e.g., 0,1,2,3,4): Enter the length of the PIN (e.g., 3): 
+PIN Permutations
+Total PINs without replacement (unique digits): 60
+Total PINs with replacement (digits can repeat): 125
+
+
+
+# --- Permutations: PIN Generator ---
+import os
+import sys
+import itertools
+
+# Helper to get a list of digits from user
+def get_list_input(prompt):
+    raw = input(prompt).strip()
+    if not raw:
+        print("Input cannot be empty.")
+        sys.exit(1)
+    return [item.strip() for item in raw.split(',') if item.strip()]
+
+# Helper to get integer input
+def get_int_input(prompt):
+    try:
+        val = int(input(prompt))
+        if val <= 0:
+            print("Please enter a positive integer.")
+            sys.exit(1)
+        return val
+    except ValueError:
+        print("Invalid input! Please enter a valid integer.")
+        sys.exit(1)
+
+# User input for digits and PIN length
+print("PIN Permutation Generator")
+digits = get_list_input("Enter digits to use for PIN separated by commas (e.g., 0,1,2,3,4): ")
+pin_length = get_int_input("Enter the length of the PIN (e.g., 3): ")
+
+if pin_length > len(digits):
+    print("PIN length exceeds number of available digits (for permutations without replacement).")
+    sys.exit(1)
+
+# Generate permutations
+permutations_without_replacement = list(itertools.permutations(digits, pin_length))
+permutations_with_replacement = list(itertools.product(digits, repeat=pin_length))
+
+# Display results
+print(f"\nPIN Permutations")
+print(f"Total PINs without replacement (unique digits): {len(permutations_without_replacement)}")
+print(f"Total PINs with replacement (digits can repeat): {len(permutations_with_replacement)}")
+
