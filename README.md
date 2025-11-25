@@ -102,6 +102,42 @@ print("Which is also: 1/6")
 
 
 
+Program Description
+
+Create the program analyzes customer preferences for two types of coffee—Latte and Black Coffee—across three age groups: 18–25, 26–40, and 40+. It calculates the probability that older customers (age 40 and above) prefer Black Coffee, both jointly and conditionally, and assesses whether age influences this preference.
+
+Input format :
+The program asks the user to input the number of customers who prefer each coffee type for each age group. Specifically:
+
+For age group 18–25: number of customers who prefer Latte and Black Coffee
+
+For age group 26–40: number of customers who prefer Latte and Black Coffee
+
+For age group 40+: number of customers who prefer Latte and Black Coffee
+
+All inputs must be non-negative integers.
+
+Output format :
+After inputs are provided, the program outputs:
+
+A data summary table showing the counts for each coffee preference by age group.
+
+The joint probability of a customer being 40 or older and preferring Black Coffee.
+
+The conditional probability of preferring Black Coffee given the customer is 40 or older.
+
+The overall probability of preferring Black Coffee across all customers.
+
+A conclusion on whether age (specifically being 40 or older) influences Black Coffee preference, based on whether the conditional probability significantly differs from the overall probability.
+
+Code constraints :
+All counts must be integers ≥ 0.
+
+If the total number of customers is zero, the program exits with an error message.
+
+If there are no customers in the 40+ group, the conditional probability cannot be computed, and the program exits with an error message.
+
+
 
 
 2.
